@@ -1,0 +1,612 @@
+<!DOCTYPE html><html lang="en" data-scrapbook-source="" data-scrapbook-create="20231012170745506" data-scrapbook-title="ОНЛАЙН-КУРС"><head>
+
+<script src="jquery.min.js"></script>
+
+    <script>
+    function set_validator_errors(){
+        orderValidator.errorTitle = 'Пожалуйста, исправьте следующие ошибки'; 
+
+        orderValidator.errorNameField = 'Имя'; 
+        orderValidator.errorNameMess = 'Укажите своё имя'; 
+        
+        orderValidator.errorPhoneField = 'Телефон для связи'; 
+        orderValidator.errorPhoneMess = 'Введите правильный телефон'; 
+        
+        orderValidator.errorAddress = 'Введите правильный адрес'; 
+        orderValidator.errorRequired = 'обязательное поле'; 
+        orderValidator.errorMaxLength = 'допустимо максимум {1} символа'; 
+        orderValidator.errorMinLength = 'допустимо минимум {1} символа'; 
+        orderValidator.errorEmailField = 'E-mail';
+        orderValidator.errorEmail = 'указан не корректный email';
+        }
+    </script>
+    
+<script>
+
+
+window.app = {
+    timestamp: parseInt((new Date()).getTime() / 1000),
+    jq: jQuery,
+    formAction: window.location.href,
+    leadToken: '652827e89866f6.66396497',
+    offers: {"38759":{"id":38759,"country":{"code":"TR","name":"\u0422\u0443\u0440\u0446\u0438\u044f"},"price":"","price2":"","currency":{"code":"EUR","name":"\u20ac"},"discount":"","delivery_price":"","link":"","product_sku":"","prepaid_info_html":null},"38760":{"id":38760,"country":{"code":"IL","name":"\u0418\u0437\u0440\u0430\u0438\u043b\u044c"},"price":"","price2":"","currency":{"code":"EUR","name":"\u20ac"},"discount":"","delivery_price":"","link":"","product_sku":"","prepaid_info_html":null},"38761":{"id":38761,"country":{"code":"JP","name":"\u042f\u043f\u043e\u043d\u0438\u044f"},"price":"","price2":"","currency":{"code":"EUR","name":"\u20ac"},"discount":"","delivery_price":"","link":"","product_sku":"","prepaid_info_html":null},"38762":{"id":38762,"country":{"code":"EG","name":"\u0415\u0433\u0438\u043f\u0435\u0442"},"price":"","price2":"","currency":{"code":"EUR","name":"\u20ac"},"discount":"","delivery_price":"","link":"","product_sku":"","prepaid_info_html":null},"38763":{"id":38763,"country":{"code":"CN","name":"\u041a\u0438\u0442\u0430\u0439"},"price":"","price2":"","currency":{"code":"EUR","name":"\u20ac"},"discount":"","delivery_price":"","link":"","product_sku":"","prepaid_info_html":null},"38764":{"id":38764,"country":{"code":"AE","name":"\u041e\u0410\u042d"},"price":"","price2":"","currency":{"code":"EUR","name":"\u20ac"},"discount":"","delivery_price":"","link":"","product_sku":"","prepaid_info_html":null}},
+    currentOffer: {"id":38759,"country":{"code":"TR","name":"\u0422\u0443\u0440\u0446\u0438\u044f"},"price":"","price2":"","currency":{"code":"EUR","name":"\u20ac"},"discount":"","delivery_price":"","link":"","product_sku":"","prepaid_info_html":null},
+    allowedCountries: ["TR","IL","JP","EG","CN","AE"],
+    _setOfferId: false,
+    streamHid: 'zJ6cw5bV',
+    showcaseUrl: '',
+    disablePhoneMask: Boolean(),
+    
+    setOffer: function (offerId) {
+        if (offerId == this._setOfferId) {
+            return ;
+        }
+        this._setOfferId = offerId;
+        if (offerId) {
+            var offer = app.offers[offerId];
+            var previousOffer = app.currentOffer;
+            app.currentOffer = offer;
+            var event = this.jq.Event("offerchange");
+            event.previousOffer = previousOffer;
+            event.currentOffer = app.currentOffer;
+            this.jq(document).trigger(event);
+            this.updatePage(offer);
+        } else {
+            $('input[name=country]').val('');
+        }
+    },
+    
+    updatePage: function(offer) {
+        $('x-newprice').html(offer.price);
+        $('x-oldprice').html(offer.price2);
+        $('x-currency').html(offer.currency.name);
+        $('input[name=offer], select[name=offer]').val(offer.id);
+        $('input[name=country]').val(offer.country.code);
+    },
+
+    blockForm: function() {
+        // Блокируем кнопки при отправке формы
+        $('input[type=submit]', $(this)).prop( 'disabled', true ).attr( 'disabled', true );
+        $('button', $(this)).prop( 'disabled', true ).attr( 'disabled', true );
+        app.incompleteOrder.lock = true;
+        clearTimeout(app.incompleteOrder.timer);
+    },
+
+    unblockForm: function() {
+        $('input[type=submit]', $(this)).prop( 'disabled', false ).attr( 'disabled', false );
+        $('button[type=submit]', $(this)).prop( 'disabled', false ).attr( 'disabled', false );
+        app.incompleteOrder.lock = false;
+        clearTimeout(app.incompleteOrder.timer);
+    }
+
+};
+
+
+</script><script src="form.validate.js"></script>
+<script src="interPhoneCodes.js"></script>
+<script src="showcase.js"></script>
+<script src="form.incomplete.js"></script>
+<script src="main2.js"></script>
+
+
+
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Title -->
+    <title>ОНЛАЙН-КУРС</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="urn:scrapbook:download:error:http://tradeblg.ru/medi-1/r10/img/core-img/favicon.ico">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+  <script>
+  var config = {};
+  </script>
+
+<script>
+
+function getRedirectUrl() {
+    var url = "http://shopblogger.top/r/link/69493?lnk=69784&m=980cb455b462&s=zJ6cw5bV&c=ze2kcjmjwwdo";
+    var d = new Date();
+    var visitDuration = parseInt(d.getTime()/1000 - $(document).data('timestamp'));
+    var glue = url.indexOf('?') >= 0 ? '&' : '?';
+    url = url + glue + 'vd2=' + visitDuration;
+    return url;
+};
+
+jQuery(function($) {
+
+  $(document).data('timestamp', parseInt((new Date()).getTime() / 1000));
+  
+});
+
+function setUrls() {
+    $("a").each(function (i) {
+        if ($(this).data('seturl') || !$(this).attr('href')) {
+            $(this).attr("href", getRedirectUrl());
+                        $(this).data('seturl', 1);
+        }
+    });
+
+    $("form").each(function (i) {
+        if ($(this).data('seturl') || !$(this).attr('action')) {
+            $(this).attr("action", getRedirectUrl());
+                        $(this).data('seturl', 1);
+        }
+    });
+
+    setTimeout(setUrls, 1000);
+}
+setUrls();
+
+$(document).on('click', 'button:not(form > button), span.vk-comment-answer, .icon-like, div.vk-comment-like, div.vk-comment-like-count', function() {
+    config.launch = false;
+    if (!$(this).hasClass('foofoobar') && !$(this).hasClass('js-no-redirect')) {
+        window.location.href = getRedirectUrl();
+    }
+});
+
+
+
+</script> 
+</head>
+
+<body>
+
+
+
+
+    <!-- Welcome Area Start -->
+    <section class="welcome-area">
+
+            <!-- Single Welcome Slide -->
+            <div class="single-welcome-slide bg-img">
+                <!-- Welcome Content -->
+                <div class="welcome-content h-100">
+                    <div class="container h-100">
+                        <div class="row h-100 align-items-center">
+                            <!-- Welcome Text -->
+                            <div class="col-12 col-md-9 col-lg-6">
+                                <div class="welcome-text">
+                                    <h2 data-animation="fadeInUp" data-delay="100ms">ОНЛАЙН-КУРС<br> ВИЗАЖ С НУЛЯ </h2>
+                                    <p data-animation="fadeInUp" data-delay="400ms">Обучитесь базовым знаниям и начни свой путь в профессии визажиста </p>
+										 <p data-animation="fadeInUp" data-delay="600ms">Стоимость курса всего <span style="font-weight: 600; color: #b09458; font-size: 24px;"> 849 тенге </span></p>
+                                    <a href="#" class="btn akame-btn" data-animation="fadeInUp" data-delay="700ms">Оставить заявку на курс</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+    </section>
+    <!-- Welcome Area End -->
+
+    <!-- About Area Start -->
+    <section class="akame-about-area section-padding-80-0">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Section Heading -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="section-heading mb-80">
+                        <h2>Визаж</h2>
+                        <p></p>
+                        <span>ОНЛАЙН-КУРС</span>
+                    </div>
+                </div>
+
+                <!-- About Us Thumbnail -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="mb-80"> <!--about-us-thumbnail -->
+                        <img src="15.png" alt="">
+                    </div>
+                </div>
+
+                <!-- About Us Content -->
+                <div class="col-12 col-lg-4">
+                    <div class="about-us-content mb-80 pl-4">
+                        <h3>ИДЕЯ КУРСА</h3>
+                        <p>Погрузиться в увлекательный мир визажа и освоить навыки макияжа с нуля с нашим интенсивным курсом – от основ до профессиональных техник!
+                        </p>
+                        <a href="#" class="btn akame-btn active mt-30">Записаться на курс</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- About Area End -->
+
+    <!-- Border -->
+    <div class="container">
+        <div class="border-top mt-3"></div>
+    </div>
+
+    <!-- Our Service Area Start -->
+    <section class="akame-service-area section-padding-80-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Section Heading -->
+                    <div class="section-heading text-center">
+                        <h2>Кому подходит этот курс?</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Single Service Area -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="single-service-area mb-80 wow fadeInUp" data-wow-delay="200ms">
+                        <img src="s1.png" alt="">
+                        <h5>Beauty индустрия</h5>
+                        <p>Хочет начать свой путь в бьюти-индустии с профессии визажист.</p>
+                    </div>
+                </div>
+
+                <!-- Single Service Area -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="single-service-area mb-80 wow fadeInUp" data-wow-delay="400ms">
+                        <img src="s1.png" alt="">
+                        <h5>Творчество</h5>
+                        <p>Мечтает реализовать свой творческий потенциал с помощью макияжа.</p>
+                    </div>
+                </div>
+
+                <!-- Single Service Area -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="single-service-area mb-80 wow fadeInUp" data-wow-delay="600ms">
+                        <img src="s1.png" alt="">
+                        <h5>Без опыта</h5>
+                        <p>Курс рассчитан на новичков и людей, кто когда то уже сталкивался с макияжем.</p>
+                    </div>
+                </div>
+
+                <!-- Single Service Area -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="single-service-area mb-80 wow fadeInUp" data-wow-delay="800ms">
+                        <img src="s1.png" alt="">
+                        <h5>Обожает эффект преображения</h5> 
+                        <p>Любит меняться и хочет обучиться всем приемам профессионального макияжа для себя.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- Our Service Area End -->
+
+    <!-- Why Choose Us Area Start -->
+    <section class="why-choose-us-area bg-gray section-padding-80-0">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 col-lg-6">
+                    <div class="choose-us-thumbnail mt-30 mb-80">
+                        <div class="choose-us-img bg-img" style="background-image: url(&quot;4.jpg&quot;);"></div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <!-- Section Heading -->
+                    <div class="section-heading">
+                        <h2>Медитация на все случаи жизни</h2>
+                        <p>Популярность медитации набирает обороты: ее преподают эксперты на просторах интернета, блогеры, многие медийные личности. Но мало кто говорит о том, как на самом деле работает медитация и почему посидеть с закрытыми глазами — недостаточно, чтобы достичь желаемого.</p>
+                    </div>
+                    <!-- Choose Us Content -->
+                    <div class="choose-us-content mt-30 mb-80">
+                        <ul>
+                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i> Улучшит самочувствие и наполнит тело энергией</li>
+                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i> Приведет в порядок мысли и эмоции</li>
+                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i> Даст чувство спокойствия и внутренней опоры</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Why Choose Us Area End -->
+
+    <!-- Portfolio Area Start -->
+    <section class="akame-blog-area section-padding-80-0 clearfix">
+        <div class="container">
+            <div class="row">
+                <!-- Section Heading -->
+                <div class="col-12">
+                    <div class="section-heading text-center">
+                        <h2>Что может измениться в жизни
+                            после применения практик курса?</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="justify-content: center">
+
+                <!-- Single Post Area -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="single-post-area mb-80 wow fadeInUp" data-wow-delay="200ms">
+                        <div class="post-thumbnail">
+                           <img src="1.jpg" alt="">
+                        </div>
+                        <div class="post-content">
+                            <p style="color: #0b0b0b">Улучшите ваше самочувствие</p>
+                            <p>Благодаря предлагаемой технике, вы сможете постепенно начать улучшать функционирование вашего тела и ума, что позволит ясно мыслить и легко ставить цели перед собой.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Post Area -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="single-post-area mb-80 wow fadeInUp" data-wow-delay="200ms">
+                        <div class="post-thumbnail">
+                            <img src="2.jpg" alt="">
+                        </div>
+                        <div class="post-content">
+                            <p style="color: #0b0b0b">Повысите свою стрессоустойчивость</p>
+                            <p>Регулярная практика медитации по предложенным методикам снизит ваш уровень стресса и изменит ваше отношение к тем раздражителям, которые вы можете встречать в своей жизни.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Post Area -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="single-post-area mb-80 wow fadeInUp" data-wow-delay="200ms">
+                        <div class="post-thumbnail">
+                            <img src="3.jpg" alt="">
+                        </div>
+                        <div class="post-content">
+                            <p style="color: #0b0b0b">Улучшение настроения</p>
+                            <p>Вы перестанете реагировать на то, что раньше вас раздражало, благодаря чему ваше настроение будет становиться стабильнее в позитивном направлении.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Post Area 
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="single-post-area mb-80 wow fadeInUp" data-wow-delay="200ms">
+                        <div class="post-thumbnail">
+                            <img src="5.jpg" alt="">
+                        </div>
+                        <div class="post-content">
+                            <p style="color: #0b0b0b">Научитесь легче проходить через сложные ситуации</p>
+                            <p>Вы поймете принцип, по которому можно самостоятельно разбираться со своими проблемами и быстрее выходить из сложных психологических ситуаций.</p>
+                        </div>
+                    </div>
+                </div>
+
+               Single Post Area 
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="single-post-area mb-80 wow fadeInUp" data-wow-delay="200ms">
+                        <div class="post-thumbnail">
+                            <img src="6.jpg" alt="">
+                        </div>
+                        <div class="post-content">
+                            <p style="color: #0b0b0b">Увеличение внутренней энергии и работоспособности</p>
+                            <p>Постоянные переживания отнимают очень много времени и сил, но сумев их побороть - вы высвободите колоссальное количество энергии и сможете легче фокусироваться на текущих задачах.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+-->
+
+            </div>
+        </div>
+    </section>
+    <!-- Portfolio Area End -->
+
+    <!-- Our Expert Area Start -->
+    <section class="akame-our-expert-area section-padding-80-0">
+
+        <!-- Side Thumbnail -->
+        <div class="side-thumbnail" style="background-image: url(&quot;14.png&quot;);"></div>
+
+        <div class="container">
+            <div class="row justify-content-end">
+                <div class="col-12 col-lg-6">
+                    <!-- Section Heading -->
+                    <div class="section-heading">
+                        <h2>Почему медитация — must have в современном мире?</h2>
+                        <p>Современный ритм жизни влияет на каждого. Загруженный рабочий день, использование гаджетов и интернета, обилие рекламы, громкие новости в СМИ — все это забирает наше внимание и ресурс. И создает у разных людей одинаковые проблемы.</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+
+                <!-- Single Team Member -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="single-team-member mb-80 wow fadeInUp" data-wow-delay="200ms" style="visibility: visible; animation-delay: 200ms; animation-name: fadeInUp;">
+
+                        <div class="team-member-info">
+                            <h5>Постоянный стресс и напряжение</h5>
+                            <p>Часто возникают тревожные мысли, мышечные зажимы в теле, стрессовые ситуации выбивают из колеи</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Team Member -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="single-team-member mb-80 wow fadeInUp" data-wow-delay="400ms" style="visibility: visible; animation-delay: 400ms; animation-name: fadeInUp;">
+                        <div class="team-member-info">
+                            <h5>Непонимание себя и своих эмоций</h5>
+                            <p>Раздражение или грусть без причины, состояние неопределенности, а на вопрос «Чего я на самом деле хочу?» — не получается найти ответ</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Team Member -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="single-team-member mb-80 wow fadeInUp" data-wow-delay="600ms" style="visibility: visible; animation-delay: 600ms; animation-name: fadeInUp;">
+
+
+                        <div class="team-member-info">
+                            <h5>Слабое здоровье и перегрузка нервной системы</h5>
+                            <p>Перевозбуждение нервной системы от телефона и компьютера, сдавленное дыхание, нарушенный гормональный фон</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Team Member -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="single-team-member mb-80 wow fadeInUp" data-wow-delay="800ms" style="visibility: visible; animation-delay: 800ms; animation-name: fadeInUp;">
+                        <div class="team-member-info">
+                            <h5>Информационный шум и рассеянное внимание</h5>
+                            <p>Мысли постоянно убегают, забываются важные дела и задачи, трудно сосредоточиться</p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- Our Expert Area End -->
+
+    <!-- Border -->
+    <div class="container">
+        <div class="border-top mt-3"></div>
+    </div>
+
+    <!-- Blog Area Start -->
+    <section class="akame-blog-area section-padding-80-0 clearfix">
+        <div class="container">
+            <div class="row">
+                <!-- Section Heading -->
+                <div class="col-12">
+                    <div class="section-heading text-center">
+                        <h2>Медитация — важнейший навык для психологической самопомощи.</h2>
+                        <p> При правильном подходе практика позволяет:
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <!-- Single Post Area -->
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="single-post-area mb-80 wow fadeInUp" data-wow-delay="200ms">
+                        <div class="post-thumbnail" style="text-align: center">
+                          <img src="s1.png" alt="">
+                        </div>
+                        <div class="post-content">
+                            <p style="text-align: center">Действовать в условиях неопределенности</p>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Post Area -->
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="single-post-area mb-80 wow fadeInUp" data-wow-delay="400ms">
+                        <div class="post-thumbnail" style="text-align: center">
+                            <img src="s1.png" alt="">
+                        </div>
+                        <div class="post-content">
+                            <p style="text-align: center">Экологично проживать<br> эмоции </p>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Post Area -->
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="single-post-area mb-80 wow fadeInUp" data-wow-delay="600ms">
+                        <div class="post-thumbnail" style="text-align: center">
+                            <img src="s1.png" alt="">
+                        </div>
+                        <div class="post-content">
+                            <p style="text-align: center">Осознанно реагировать на любые события</p>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Single Post Area -->
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="single-post-area mb-80 wow fadeInUp" data-wow-delay="600ms">
+                        <div class="post-thumbnail" style="text-align: center">
+                            <img src="s1.png" alt="">
+                        </div>
+                        <div class="post-content">
+                            <p style="text-align: center">Сохранять самообладание в стрессовых ситуациях</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Blog Area End -->
+
+    <!-- Call To Action Area Start -->
+    <section class="akame-cta-area bg-gray section-padding-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-10 col-xl-5">
+                    <div class="cta-content">
+                        <h2>ОНЛАЙН-КУРС
+                            <br>ПО МЕДИТАЦИИ
+                        </h2>
+                        <p>Когда медитация становится частью вас — вы естественным образом меняете мир и людей вокруг.</p>
+                        <p>Базовые практики медитации помогают справиться с тревожностью и навязчивыми мыслями, снизить уровень стресса и изменить восприятие жизни с негативного на позитивный.</p>
+                        <div class="akame-btn-group mt-30">
+						 <p data-animation="fadeInUp" data-delay="600ms">Стоимость курса всего <span style="font-weight: 600; color: #b09458; font-size: 24px;"> 599 тенге </span></p>
+                            <a href="" class="btn akame-btn active mr-3 mb-3 mb-sm-0">Оставить заявку на курс</a><br><br>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Thumbnail -->
+        <div class="cta-thumbnail bg-img" style="background-image: url(&quot;cta.png&quot;);"></div>
+    </section>
+<div class="foot_ru_center" style="text-align: center; margin: 0px auto; padding: 30px 0; font-size:15px">
+<center>
+    <p>ТОВАРИЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ
+"MED-M"</p>
+    <p>Северо-Казахстанская область, Улица Им.Ч.Валиханова, 7, КВ 34</p>
+    <p>БИН 161240013419</p>
+    <p>+77152517134</p>
+    <p>email: medea-1@mail.ru</p>
+
+    <p class="conf-link doclinks"><a target="_blank" class="nav-link" href="http://tradeblg.ru/medi-1/r10/kz/politica-kz.html">Құпиялылық саясаты</a></p>
+
+    <p class="policy-link doclinks"><a target="_blank" class="nav-link" href="http://tradeblg.ru/medi-1/r10/kz/use-kz.html">Пайдаланушы келісімі</a></p>
+    
+    <p class="policy-link doclinks"><a target="_blank" class="nav-link" href="http://tradeblg.ru/medi-1/r10/kz/obm-kz.html">Айырбастау және қайтару шарттары</a></p>
+</center>
+
+</div>
+    <!-- Call To Action Area End -->
+
+    <!-- Footer Area Start -->
+
+    <!-- Footer Area End -->
+
+    <!-- All JS Files -->
+    <!-- jQuery -->
+    <script src="jquery.min-1.js"></script>
+    <!-- Popper -->
+    <script src="popper.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="bootstrap.min.js"></script>
+    <!-- All Plugins -->
+    <script src="akame.bundle.js"></script>
+    <!-- Active -->
+    <script src="active.js"></script>
+
+<!-- Yandex.Metrika counter -->
+<!-- /Yandex.Metrika counter -->
+
+
+</body></html>
